@@ -1,0 +1,59 @@
+basePath: /AetherPlatform/api
+definitions:
+  main.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  main.LoginResponse:
+    properties:
+      token:
+        type: string
+      user:
+        properties:
+          email:
+            type: string
+          id:
+            type: string
+          name:
+            type: string
+        type: object
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: API de autenticación para AetherPlatform
+  title: AetherPlatform API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Valida credenciales y devuelve token JWT
+      parameters:
+      - description: Credenciales
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/main.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.LoginResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login de usuario
+      tags:
+      - auth
+swagger: "2.0"
